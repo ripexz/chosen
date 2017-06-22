@@ -164,10 +164,10 @@ class AbstractChosen
 
     results = 0
 
-    searchText = this.get_search_text()
-    escapedSearchText = searchText.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
-    regex = this.get_search_regex(escapedSearchText)
-    highlightRegex = this.get_highlight_regex(escapedSearchText)
+    query = this.get_search_text()
+    escapedQuery = query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+    regex = this.get_search_regex(escapedQuery)
+    highlightRegex = this.get_highlight_regex(escapedQuery)
 
     for option in @results_data
 
@@ -193,7 +193,7 @@ class AbstractChosen
 
 
           if option.search_match
-            if searchText.length
+            if query.length
               startpos = option.search_text.search highlightRegex
               prefix = option.search_text.slice(0, startpos)
               fix    = option.search_text.slice(startpos, startpos + query.length)
@@ -207,9 +207,9 @@ class AbstractChosen
 
     this.result_clear_highlight()
 
-    if results < 1 and searchText.length
+    if results < 1 and query.length
       this.update_results_content ""
-      this.no_results searchText
+      this.no_results query
     else
       this.update_results_content this.results_option_build()
       this.winnow_results_set_highlight()
